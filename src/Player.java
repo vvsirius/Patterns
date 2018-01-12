@@ -5,19 +5,23 @@ public class Player {
     Player(Maze maze, int roomNumber){
         this.maze = maze;
         this.roomNumber = roomNumber;
+        Room room = maze.getRoom(roomNumber);
+        hasKey = room.enter();
+
     }
     void goEast(){
         Room room = maze.getRoom(roomNumber);
         if (room.getEast() instanceof Room){
             room = (Room)room.getEast();
-            room.enter();
+            hasKey = room.enter();
             roomNumber = room.getNumber();
         }
         if (room.getEast() instanceof Door){
             Door door = (Door)room.getEast();
             if (door.isOpen()){
                  room = maze.getRoom(door.toRoom);
-                 room.enter();
+                 hasKey = room.enter();
+                 roomNumber = room.getNumber();
             }
             else System.out.println("The door is locked!");
         }
